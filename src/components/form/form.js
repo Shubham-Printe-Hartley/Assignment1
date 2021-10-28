@@ -104,7 +104,7 @@ const Form = () => {
                 <p>
                   If you have trouble logging in,
                   <br />
-                  please contact Us at 
+                  please contact Us at &nbsp;
                   <a href="#">800-320-7220</a>
                   , ext &nbsp;
                   <span>9995</span>

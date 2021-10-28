@@ -1,12 +1,14 @@
 import Logo from './logo/logo';
 import FormContainer from './form/formContainer';
 import Link from './links/link';
+
+import logoImg from '../assets/logo2.png';
 const Container = () => {
   return(
-    <div style={{marginTop:"15px"}} className="wrapper">
+    <div className="wrapper">
       <div className="mid-container w-100">
       <div className="container">
-        <Logo />
+        <Logo img={logoImg} />
         <FormContainer />
         <Link />
       </div>
