@@ -1,6 +1,5 @@
 import Logo from './logo/logo';
 import FormContainer from './form/formContainer';
-import Link from './links/link';
 
 import logoImg from '../assets/logo2.png';
 const Container = () => {
@@ -8,9 +7,19 @@ const Container = () => {
     <div className="wrapper">
       <div className="mid-container w-100">
       <div className="container">
+
+        {/* Company Logo */}
         <Logo img={logoImg} />
+
+        {/* Login Form */}
         <FormContainer />
-        <Link />
+        
+        {/* Links  */}
+        <div className="links text-center">
+          <a href="/#">Privacy Policy</a>
+          &nbsp; • &nbsp; 
+          <a href="/#">Terms of Service</a>
+        </div>
       </div>
       </div>
     </div>

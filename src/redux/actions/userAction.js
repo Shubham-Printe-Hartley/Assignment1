@@ -1,53 +1,55 @@
-import axios from 'axios';
-import * as types from './types';
+// import axios from 'axios';
+import auth from '../../services/auth';
+import {loginConstants} from '../constants/index';
+
+
+// dispatch objects 
+const request = (type, data) => {
+  return {
+    type: type,
+    payload: data
+  }
+}
+
+const success = (type, data) => {
+  return{
+    type: type,
+    payload: data
+  }
+}
+
+const failure = (type, error) => {
+  return{
+    type: type, 
+    payload: error
+  }
+}
+
 
 export const login = (userCredentials) => async(dispatch) => {
+  
+  dispatch(request(loginConstants.USER_LOGIN_REQUEST));
+  
   try{
-    dispatch({
-      type: types.USER_LOGIN_REQUEST
-    });
+    dispatch(request(loginConstants.USER_LOGIN_REQUEST));
 
     // call login API here and dispatch user actions based on response
+    const response = await auth.login(userCredentials);
 
-    const response = await axios.post('https://perkzza-dev-api-tenants.perkzza.com/api/v1/tenant/login', userCredentials);
-    const data = response.data;
-    const status = response.status
-    console.log(response);
-    
     // if successful save user data to local storage and dispatch login sucess action
-    if(status===200){
-      dispatch({
-        type: types.USER_LOGIN_SUCCESS,
-        payload: data //update user data after examining response
-      });
+      dispatch(success(loginConstants.USER_LOGIN_SUCCESS, response.data));
+      localStorage.setItem('userLogin', JSON.stringify(response.data)) //update user data after examining response
 
-      localStorage.setItem('userLogin', JSON.stringify(data)) //update user data after examining response
-
-      // window.location.reload();
-    }else{ // if failed dispatch login failed action
-      dispatch({
-        type: types.USER_LOGIN_FAILURE,
-        payload: data //update user data after examining response
-      });
-    }
   } catch(err) {
-    dispatch({
-      type: types.USER_LOGIN_FAILURE,
-      payload: err
-    })
+    dispatch(failure(loginConstants.USER_LOGIN_FAILURE, err.response.data))
   }
 }
 
 export const logout = () => (dispatch) => {
-
-  console.log("logout clicked")
   // remove user data from local storage
   localStorage.removeItem('userLogin');
 
   // dispatch user logout action
-  dispatch({
-    type: types.USER_LOGOUT
-  });
-
-  // window.location.reload();
+  dispatch(request(loginConstants.USER_LOGOUT));
 }
+
